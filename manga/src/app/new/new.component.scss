@@ -1,0 +1,151 @@
+$not_cons_color: rgb(255, 113, 113);
+$cons_buy_color: rgb(164, 253, 142);
+$tome_not_buyed: rgb(172, 159, 246);
+
+$foreground: rgb(250, 246, 246);
+$border_color:rgb(226, 226, 226);
+$head_menu_color:  rgb(251, 241, 255); 
+
+
+
+
+
+section {
+    display: inline-block;
+    width: 800px;
+    background-color: $foreground;
+    padding: 10px;
+    border: 1px solid $border_color;
+    vertical-align: top;
+    
+}
+
+aside {
+    padding: 10px;
+    width: 300px;
+    background-color: $foreground;
+    display: inline-block;
+    align-self: baseline;
+    margin-inline-start: 10px;
+    border: 1px solid $border_color;
+}
+
+h2 {
+    display: block;
+}
+
+main {
+    width: 1200px;
+    background-color: white;
+    min-height: 90vh;
+    padding: 30px;
+}
+
+li { 
+    list-style: none;
+    margin-bottom: 10px;
+}
+.add_author {
+    display: inline-flex;
+    align-items: center;
+    padding-top: 10px;
+}
+.author {
+    margin-top: 20px;
+}
+.buyed {
+    background-color: $cons_buy_color;
+}
+
+.legend_color {
+    display: inline-block;
+    border: 1px solid black;
+    height: 15px;
+    width: 50px;
+}
+
+.legend_text {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#not_cons {
+    background-color: $not_cons_color;
+}
+
+#tome_not_buyed {
+    background-color: $tome_not_buyed;
+}
+
+#subMenu {
+    padding: 15px;
+}
+
+.content {
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.volume {
+    padding: 10px ;
+    border-bottom: 1px solid $border_color;
+    border-top: 1px solid $border_color;
+}
+
+.volume_adder_container {
+    margin-top: 10px;
+}
+
+.volume_adder {
+    display: inline-flex;
+    margin-right: 10px;
+    align-items: center;
+    width: calc(100% - 15px);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid $border_color;
+    border-bottom: 1px solid $border_color;
+    
+}
+
+.volume_header {
+    display: inline-flex;
+}
+
+.head_menu {
+    margin: 0px;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-bottom: 0px;
+    background-color: $head_menu_color;
+}
+
+form { 
+    padding: 0px;
+    padding-right: 0px;
+}
+
+h1 {
+    padding: 15px;
+    padding-left: 50px;
+    margin: 0;
+}
+
+h2 {
+    margin: 0px;
+    margin-right: 10px;
+}
+
+mat-checkbox {
+    margin-top: 10px;
+    margin-left: 3px;
+}
+
+mat-form-field {
+    margin-right: 30px ;
+}
+
+
+.resume, .title, .url {
+    width: 500px;
+}

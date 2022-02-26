@@ -1,0 +1,19 @@
+<main>
+    <mat-icon>dfdffdfdf</mat-icon>
+    <section>
+      <h1>Mes mangas</h1>
+      <a routerLink="new"><mat-icon>add_circle</mat-icon><span>Ajouter un nouveau manga</span></a>
+      <div *ngFor="let manga of mangas">{{ manga.title }}</div>
+    </section>
+    <aside>
+    <h2>Legende</h2>
+      <ul>
+        <li><div class="legend_color" id="not_cons"></div><div class="legend_text">Non conserve</div></li>
+        <li><div  class="legend_color cons"></div><div class="legend_text">A Conserver</div></li>
+        <li><div  class="legend_color buyed"></div><div class="legend_text">Complete</div></li>
+        <li><div  class="legend_color buyed"></div><div class="legend_text">Tome achete</div></li>
+        <li><div  class="legend_color" id="tome_not_buyed"></div><div class="legend_text">Tome pas achete</div></li>
+      </ul>
+    </aside>
+  </main>
+  <router-outlet></router-outlet>

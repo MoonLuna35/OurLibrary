@@ -1,0 +1,114 @@
+
+    <h1 mat-dialog-title>Ajouter une serie de livres</h1>
+
+
+<form [formGroup]="newMangaForm" (ngSubmit)="onSubmit($event)">
+        <div class="head_menu">
+            <mat-form-field class="title" appearance="fill">
+                <mat-label>Titre *</mat-label>
+                <input type="text" matInput formControlName="title">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Editeur</mat-label>
+                <input type="text" matInput formControlName="editor">
+            </mat-form-field>
+            <div>   
+                <div class="pointer volume_adder" (click)="OnAddVolumeClicked()"><mat-icon>add_circle</mat-icon><span>Ajouter un tome</span></div>
+            </div>
+        </div>
+        
+        
+        <mat-dialog-content>
+            <div class="content">
+                <mat-checkbox formControlName="sameAuthor">Ce sont les memes auteurs pour tout les tomes</mat-checkbox>
+
+                <div *ngIf="newMangaForm.controls['sameAuthor'].value === true">
+                    <div class="pointer add_author" (click)="OnAddMainAuthorClicked()"><mat-icon >add_circle</mat-icon><span class>Ajouter un auteur</span></div>
+                    <div class="author" formArrayName="author">
+                        <div *ngFor="let author of getAuthorControls(); let i = index">
+                            <div [formGroupName]="i">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Nom de l'auteur</mat-label>
+                                    <input type="text" matInput formControlName="name">
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Prenom de l'auteur</mat-label>
+                                    <input type="text" matInput formControlName="surname">
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Fonction</mat-label>
+                                    <input type="text" matInput formControlName="function">
+                                </mat-form-field>
+                                <mat-icon *ngIf="authorLength > 1" (click)="OnRemoveMainAuthorClicked($event, i)" class="delete_icon">delete_forever</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="volume" *ngFor="let volume of getVolumeControls(); let i = index" formArrayName="volumes">
+                    <div [formGroupName]="i">
+                        <div class="volume_header">
+                            <h2>Tome {{ i + 1 }}</h2><div class="pointer" (click)="OnRemoveVolumeClicked($event, i)"><mat-icon class="delete_icon" >delete_forever</mat-icon><span class="bubule">Supprimer le tome</span></div>
+                        </div>
+                        <div>
+                            <mat-icon *ngIf="volumeList?.get(i)?.nativeElement.classList.contains('gosth')" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_down</mat-icon>
+                            <mat-icon *ngIf="!volumeList?.get(i)?.nativeElement.classList.contains('gosth')" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_up</mat-icon>
+
+                            <div class="gosth" #volume>
+                                <mat-form-field appearance="fill" class="title">
+                                    <mat-label>Titre</mat-label>
+                                    <input type="text" matInput placeholder="Tome {{ i + 1 }}" formControlName="title">
+                                </mat-form-field>
+                        
+                                    <div *ngIf="newMangaForm.controls['sameAuthor'].value === false">
+                                    <div  class="pointer add_author" (click)="OnAddAuthorVolumeClicked($event, volume)"><mat-icon >add_circle</mat-icon><span>Ajouter un auteur</span></div>
+                                        <div *ngFor="let author of getAuthorOfVolumeControls(volume); let j = index" formArrayName="author">
+                                            <div [formGroupName]="j">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Nom de l'auteur</mat-label>
+                                                    <input type="text" matInput formControlName="name">
+                                                </mat-form-field>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Prenom de l'auteur</mat-label>
+                                                    <input type="text" matInput formControlName="surname">
+                                                </mat-form-field>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Fonction</mat-label>
+                                                    <input type="text" matInput formControlName="function">
+                                                </mat-form-field>
+                                                <mat-icon *ngIf="getAuthorOfVolumeSize(volume) > 1" (click)="OnRemoveVolumeAuthorClicked($event, volume, j)" class="delete_icon">delete_forever</mat-icon>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    <div>   
+                                        <mat-form-field appearance="fill" class="resume">
+                                    
+                                            <mat-label>Resume</mat-label>
+                                            <textarea type="text" matInput formControlName="resume"></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                
+                                <div>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Date de parution</mat-label>
+                                        <input type="date" matInput formControlName="release_date">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill" class="url">
+                                        <mat-label>Lien d'achat</mat-label>
+                                        <input type="url" matInput formControlName="purchase_link">
+                                    </mat-form-field>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+             
+            <button type="submit" [disabled]="newMangaForm.invalid" mat-raised-button>Ajouter</button>
+        </mat-dialog-actions>
+</form>
+

@@ -1,0 +1,77 @@
+$not_cons_color: rgb(255, 113, 113);
+$complete_color: rgb(164, 253, 142);
+$cons_color: rgb(164, 253, 142);;
+$buy_color: rgb(116, 197, 95);
+$tome_not_buyed: rgb(241, 212, 150);
+
+$foreground: rgb(250, 246, 246);
+$border_color:rgb(226, 226, 226); 
+
+
+
+
+
+section {
+    display: inline-block;
+    width: 800px;
+    background-color: $foreground;
+    padding: 10px;
+    border: 1px solid $border_color;
+    vertical-align: top;
+    
+}
+
+aside {
+    padding: 10px;
+    width: 300px;
+    background-color: $foreground;
+    display: inline-block;
+    align-self: baseline;
+    margin-inline-start: 10px;
+    border: 1px solid $border_color;
+}
+
+h2 {
+    display: block;
+}
+
+main {
+    width: 1200px;
+    background-color: white;
+    min-height: 90vh;
+    padding: 30px;
+}
+
+li { 
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.buyed {
+    background-color: $buy_color;
+}
+
+.cons {
+    background-color: $cons_color;
+}
+
+.legend_color {
+    display: inline-block;
+    border: 1px solid black;
+    height: 20px;
+    width: 50px;
+    border-radius: 3px;
+}
+
+.legend_text {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#not_cons {
+    background-color: $not_cons_color;
+}
+
+#tome_not_buyed {
+    background-color: $tome_not_buyed;
+}
