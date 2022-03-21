@@ -2,7 +2,7 @@
     <h1 mat-dialog-title>Ajouter une serie de livres</h1>
 
 
-<form [formGroup]="newMangaForm" (ngSubmit)="onSubmit($event)">
+<form [formGroup]="newcollectionForm" (ngSubmit)="onSubmit($event)">
         <div class="head_menu">
             <mat-form-field class="title" appearance="fill">
                 <mat-label>Titre *</mat-label>
@@ -22,7 +22,7 @@
             <div class="content">
                 <mat-checkbox formControlName="sameAuthor">Ce sont les memes auteurs pour tout les tomes</mat-checkbox>
 
-                <div *ngIf="newMangaForm.controls['sameAuthor'].value === true">
+                <div *ngIf="newcollectionForm.controls['sameAuthor'].value === true">
                     <div class="pointer add_author" (click)="OnAddMainAuthorClicked()"><mat-icon >add_circle</mat-icon><span class>Ajouter un auteur</span></div>
                     <div class="author" formArrayName="author">
                         <div *ngFor="let author of getAuthorControls(); let i = index">
@@ -59,7 +59,7 @@
                                     <input type="text" matInput placeholder="Tome {{ i + 1 }}" formControlName="title">
                                 </mat-form-field>
                         
-                                    <div *ngIf="newMangaForm.controls['sameAuthor'].value === false">
+                                    <div *ngIf="newcollectionForm.controls['sameAuthor'].value === false">
                                     <div  class="pointer add_author" (click)="OnAddAuthorVolumeClicked($event, volume)"><mat-icon >add_circle</mat-icon><span>Ajouter un auteur</span></div>
                                         <div *ngFor="let author of getAuthorOfVolumeControls(volume); let j = index" formArrayName="author">
                                             <div [formGroupName]="j">
@@ -108,7 +108,7 @@
         </mat-dialog-content>
         <mat-dialog-actions>
              
-            <button type="submit" [disabled]="newMangaForm.invalid" mat-raised-button>Ajouter</button>
+            <button type="submit" [disabled]="newcollectionForm.invalid" mat-raised-button>Ajouter</button>
         </mat-dialog-actions>
 </form>
 

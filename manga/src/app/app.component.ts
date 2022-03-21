@@ -7,7 +7,7 @@ import { NewComponent } from './new/new.component';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'manga';
+  title = 'collection';
   constructor(private dialog: MatDialog) {
   }
 

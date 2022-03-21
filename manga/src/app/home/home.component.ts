@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MangaDialogService, NewComponent } from '../new/new.component';
-import { Manga } from '../services/manga/manga';
+import { collectionDialogService, NewComponent } from '../new/new.component';
+import { Collection } from '../services/collection/collection';
 
 @Component({
   selector: 'app-home',
@@ -9,16 +9,16 @@ import { Manga } from '../services/manga/manga';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  mangas: Array<Manga> = []
+  collections: Array<Collection> = []
 
-  constructor(public mangaDialogService: MangaDialogService) {
+  constructor(public collectionDialogService: collectionDialogService) {
     
   }
 
   ngOnInit(): void {
-    this.mangaDialogService.manga.subscribe(
-      (res: Manga) => {
-        this.mangas.push(res);
+    this.collectionDialogService.collection.subscribe(
+      (res: Collection) => {
+        this.collections.push(res);
       }
     )
     

@@ -1,24 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Manga } from './manga';
+import { Collection } from './collection';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MangaService {
-  baseUrl = "http://localhost/mangAPI/mangas/";
+export class CollectionService {
+  baseUrl = "http://localhost/collectionPI/api/collections/";
   constructor(private http: HttpClient) { }
 
 
-  add(manga : Manga): Observable<any> {
+  add(collection : Collection): Observable<any> {
     let payload = {
       data: {
-        manga: {
-          title: manga.title,
-          authors: manga.author,
-          volumes: manga.volumes.length,
-          state: manga.state
+        collection : {
+          title: collection.title,
+          editor: collection.editor,
+          resume: collection.resume,
+          state: collection.state
         }
       }
     }

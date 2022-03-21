@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NewComponent, NewEntry, MangaDialogService } from './new/new.component';
+import { NewComponent, NewEntry, collectionDialogService } from './new/new.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -43,7 +43,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
   ],
   providers: [
-    MangaDialogService
+    collectionDialogService
   ],
   bootstrap: [AppComponent]
 })

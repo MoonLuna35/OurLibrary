@@ -1,28 +1,32 @@
 import { Volume } from "../volume/volume";
 
-export interface IManga {
+export interface Icollection {
     id?: number;
     title: string;
     author: string;
     state?:string;
+    editor: string;
+    resume: string;
     volumes?: Array<Volume>;
 }
 
-export class Manga {
+export class Collection {
     private _id: number = -1;
     private _title: string = "";
     private _author: string = "";
     private _state: string = "conserved";
+    private _editor: string = "";
+    private _resume: string = "";
     private _volumes: Array<Volume> = [];
    
    
 
-    constructor(manga: IManga) {
-        this._id = manga.id === undefined ? -1 : manga.id;
-        this._title = manga.title;
-        this._author = manga.author;
-        this._state = manga.state === undefined ? "conserved" : manga.state;
-        this._volumes = manga.volumes === undefined ? [] : manga.volumes 
+    constructor(collection: Icollection) {
+        this._id = collection.id === undefined ? -1 : collection.id;
+        this._title = collection.title;
+        this._author = collection.author;
+        this._state = collection.state === undefined ? "conserved" : collection.state;
+        this._volumes = collection.volumes === undefined ? [] : collection.volumes 
     }
 
     public get id(): number {
@@ -36,6 +40,12 @@ export class Manga {
     }
     public get state(): string {
         return this._state;
+    }
+    public get editor(): string {
+        return this._editor;
+    }
+    public get resume(): string {
+        return this._resume;
     }
     public get volumes(): Array<Volume> {
         return this._volumes;
@@ -53,6 +63,12 @@ export class Manga {
     }
     public set state(value: string) {
         this._state = value;
+    }
+    public set editor(value: string) {
+        this._editor = value;
+    }
+    public set resume(value: string) {
+        this._resume = value;
     }
     public set volumes(value: Array<Volume>) {
         this._volumes = value;

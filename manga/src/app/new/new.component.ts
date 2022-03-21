@@ -4,19 +4,19 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { RegEx } from '../controler/regex';
-import { Manga } from '../services/manga/manga';
-import { MangaService } from '../services/manga/manga.service';
+import { Collection } from '../services/collection/collection';
+import { CollectionService } from '../services/collection/collection.service';
 import { Volume } from '../services/volume/volume';
 
 
 @Injectable()
-export class MangaDialogService {
-  manga :EventEmitter<Manga> = new EventEmitter<Manga>();
-  private _manga?: Manga;
+export class collectionDialogService {
+  collection :EventEmitter<Collection> = new EventEmitter<Collection>();
+  private _collection?: Collection;
 
-  setManga(manga: Manga) {
-    this._manga = manga;
-    this.manga.emit(this._manga);
+  setcollection(collection: Collection) {
+    this._collection = collection;
+    this.collection.emit(this._collection);
   }
 }
 
@@ -51,26 +51,28 @@ export class NewEntry implements OnInit {
 export class NewComponent implements OnInit {
   @ViewChildren("volume") volumeList?: QueryList<ElementRef>;
   @ViewChildren("deployer") deployerList?: QueryList<ElementRef>;
-  newMangaForm: FormGroup; //Le formulaire
+  newcollectionForm: FormGroup; //Le formulaire
   volumes: Array<Volume> = [];
   working = false;
   authorLength = 1;
   
 
 
-  private manga = new Manga({
+  private collection = new Collection({
     title: "",
-    author: ""
+    author: "",
+    editor: "",
+    resume: ""
   })
     constructor(
       protected theDialog: MatDialogRef<NewComponent>,
       protected formBuilder: FormBuilder,
-      protected mangaService: MangaService,
-      protected mangaDialogService: MangaDialogService,
+      protected collectionService: CollectionService,
+      protected collectionDialogService: collectionDialogService,
       private renderer: Renderer2,
       private cdr: ChangeDetectorRef
     ) {
-      this.newMangaForm = this.formBuilder.group({
+      this.newcollectionForm = this.formBuilder.group({
         title: ["", Validators.compose([
           Validators.required, 
           Validators.pattern(RegEx.ALPHA_PATERN)
@@ -90,7 +92,7 @@ export class NewComponent implements OnInit {
 
   //events
   OnAddMainAuthorClicked() {
-    const control = <FormArray>this.newMangaForm.get("author");
+    const control = <FormArray>this.newcollectionForm.get("author");
     control.push(this.createAuthor(undefined));
     this.authorLength ++
   }
@@ -101,7 +103,7 @@ export class NewComponent implements OnInit {
     
   }
   OnAddVolumeClicked(): void {
-    const control = <FormArray>this.newMangaForm.get("volumes");
+    const control = <FormArray>this.newcollectionForm.get("volumes");
     control.push(this.createVolume(undefined));
 
     this.cdr.detectChanges();
@@ -119,14 +121,14 @@ export class NewComponent implements OnInit {
   }
   OnRemoveVolumeClicked(event: Event, i:number): void {
     event.preventDefault();
-    const control = <FormArray>this.newMangaForm.get("volumes");
+    const control = <FormArray>this.newcollectionForm.get("volumes");
     control.removeAt(i);
     //On modifie les numeros de tomes suivants
 
   }
   OnRemoveMainAuthorClicked(event: Event, i:number) {
     event.preventDefault();
-    const control = <FormArray>this.newMangaForm.get("author");
+    const control = <FormArray>this.newcollectionForm.get("author");
     
     control.removeAt(i);
     this.authorLength --
@@ -140,15 +142,17 @@ export class NewComponent implements OnInit {
   onSubmit(event: Event) {
     event.preventDefault();
     this.working =true;
-    if(this.newMangaForm.valid) {
-      this.manga = new Manga({
-        title: this.newMangaForm.controls["title"].value,
-        author: this.newMangaForm.controls["author"].value,
+    if(this.newcollectionForm.valid) {
+      this.collection = new Collection({
+        title: this.newcollectionForm.controls["title"].value,
+        author: this.newcollectionForm.controls["author"].value,
+        editor: this.newcollectionForm.controls["editor"].value,
+        resume: "",
         volumes: this.volumes
       });
-      this.mangaService.add(this.manga).subscribe(
+      this.collectionService.add(this.collection).subscribe(
         (res: any) => {
-          this.mangaDialogService.setManga(this.manga);
+          this.collectionDialogService.setcollection(this.collection);
           this.theDialog.close();
         },
       )
@@ -176,7 +180,7 @@ export class NewComponent implements OnInit {
   }
 
   private createVolume(item: any|undefined): FormGroup {
-    const control = <FormArray>this.newMangaForm.get("volumes");
+    const control = <FormArray>this.newcollectionForm.get("volumes");
     if (item === undefined) {
       return this.formBuilder.group({
         volume_number: [control.length +1],
@@ -201,12 +205,12 @@ export class NewComponent implements OnInit {
     
   }
   getAuthorControls() {
-    return (this.newMangaForm.get('author') as FormArray).controls;
+    return (this.newcollectionForm.get('author') as FormArray).controls;
   }
 
 
   getVolumeControls() {
-    return (this.newMangaForm.get('volumes') as FormArray).controls;
+    return (this.newcollectionForm.get('volumes') as FormArray).controls;
   }
 
   getAuthorOfVolumeControls(vol: AbstractControl) {
