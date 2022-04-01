@@ -47,7 +47,7 @@
                 <div class="volume" *ngFor="let volume of getVolumeControls(); let i = index" formArrayName="volumes">
                     <div [formGroupName]="i">
                         <div class="volume_header">
-                            <h2>Tome {{ i + 1 }}</h2><div class="pointer" (click)="OnRemoveVolumeClicked($event, i)"><mat-icon class="delete_icon" >delete_forever</mat-icon><span class="bubule">Supprimer le tome</span></div>
+                            <h2>Tome {{ i + 1 }}</h2><div *ngIf="volumesLength > 1" class="pointer" (click)="OnRemoveVolumeClicked($event, i)"><mat-icon class="delete_icon" >delete_forever</mat-icon><span class="bubule">Supprimer le tome</span></div>
                         </div>
                         <div>
                             <mat-icon *ngIf="volumeList?.get(i)?.nativeElement.classList.contains('gosth')" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_down</mat-icon>

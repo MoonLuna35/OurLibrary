@@ -3,7 +3,6 @@ import { Volume } from "../volume/volume";
 export interface Icollection {
     id?: number;
     title: string;
-    author: string;
     state?:string;
     editor: string;
     resume: string;
@@ -13,7 +12,6 @@ export interface Icollection {
 export class Collection {
     private _id: number = -1;
     private _title: string = "";
-    private _author: string = "";
     private _state: string = "conserved";
     private _editor: string = "";
     private _resume: string = "";
@@ -24,7 +22,6 @@ export class Collection {
     constructor(collection: Icollection) {
         this._id = collection.id === undefined ? -1 : collection.id;
         this._title = collection.title;
-        this._author = collection.author;
         this._state = collection.state === undefined ? "conserved" : collection.state;
         this._volumes = collection.volumes === undefined ? [] : collection.volumes 
     }
@@ -34,9 +31,6 @@ export class Collection {
     }
     public get title(): string {
         return this._title;
-    }
-    public get author(): string {
-        return this._author;
     }
     public get state(): string {
         return this._state;
@@ -57,9 +51,6 @@ export class Collection {
     }
     public set title(value: string) {
         this._title = value;
-    }
-    public set author(value: string) {
-        this._author = value;
     }
     public set state(value: string) {
         this._state = value;

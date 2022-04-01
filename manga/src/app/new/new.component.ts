@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { RegEx } from '../controler/regex';
+import { Author } from '../services/author/author';
 import { Collection } from '../services/collection/collection';
 import { CollectionService } from '../services/collection/collection.service';
 import { Volume } from '../services/volume/volume';
@@ -55,12 +56,12 @@ export class NewComponent implements OnInit {
   volumes: Array<Volume> = [];
   working = false;
   authorLength = 1;
+  volumesLength = 0;
   
 
 
   private collection = new Collection({
     title: "",
-    author: "",
     editor: "",
     resume: ""
   })
@@ -87,7 +88,7 @@ export class NewComponent implements OnInit {
   }
   //ng
   ngOnInit(): void {
-    
+    this.OnAddVolumeClicked();
   }
 
   //events
@@ -105,7 +106,7 @@ export class NewComponent implements OnInit {
   OnAddVolumeClicked(): void {
     const control = <FormArray>this.newcollectionForm.get("volumes");
     control.push(this.createVolume(undefined));
-
+    this.volumesLength++;
     this.cdr.detectChanges();
     
   }
@@ -122,7 +123,11 @@ export class NewComponent implements OnInit {
   OnRemoveVolumeClicked(event: Event, i:number): void {
     event.preventDefault();
     const control = <FormArray>this.newcollectionForm.get("volumes");
-    control.removeAt(i);
+    if (this.volumesLength !== 1) {
+      control.removeAt(i);
+      this.volumesLength--;
+    }
+
     //On modifie les numeros de tomes suivants
 
   }
@@ -141,11 +146,16 @@ export class NewComponent implements OnInit {
   }
   onSubmit(event: Event) {
     event.preventDefault();
-    this.working =true;
+    this.working =true
+    const sameAuth = this.newcollectionForm.controls["sameAuthor"].value; 
     if(this.newcollectionForm.valid) {
+      this.compilVolume();
+      //On instancie les volumes avec les auteurs
+        //SI l'auteur n'a ni noms, ni prenoms ALORS 
+          //On ne l'ajoute pas
+      
       this.collection = new Collection({
         title: this.newcollectionForm.controls["title"].value,
-        author: this.newcollectionForm.controls["author"].value,
         editor: this.newcollectionForm.controls["editor"].value,
         resume: "",
         volumes: this.volumes
@@ -160,7 +170,74 @@ export class NewComponent implements OnInit {
   }
 
   //methodes
- 
+  private compilAuthorsOf(indice: number, vol: any): Array<Author> {
+    const same_author = this.newcollectionForm.controls["sameAuthor"].value;
+    let authors: Array<Author> = [];
+    let i:number  = 0;
+
+    if (same_author) {
+      const auths: any = this.newcollectionForm.controls["author"]
+      for(i = 0; i < auths.length; i++) {
+        if (
+          auths.get(i + "").get("name").value !== ""
+          ||
+          auths.get(i + "").get("surname").value !== ""
+        ) {
+          authors.push(new Author({
+            name: auths.get(i + "").get("name").value,
+            surname: auths.get(i + "").get("surname").value,
+            function: auths.get(i + "").get("function").value
+          }));
+        }
+        
+      }
+      
+    }
+    else {
+      const auths: any = vol["author"];
+
+      for(i = 0; i < auths.length; i++) {
+        if (
+          auths[i].name !== ""
+          ||
+          auths[i].surname !== ""
+        ) {
+          authors.push(new Author({
+            name: auths[i].name,
+            surname: auths[i].surname,
+            function: auths[i].function
+          }));
+        }
+      }
+    }
+
+    return authors;
+  }
+
+
+  private compilVolume(): void {
+    const vol = this.newcollectionForm.controls["volumes"].value;
+  
+    let volumesToAdd: Array<Volume> = []
+    let i =0;
+    for(i = 0; i < vol.length; i++) {
+      volumesToAdd.push(new Volume({
+        num: vol[i]["volume"],
+        title: vol[i]["title"],
+        resume: vol[i]["resume"],
+        parution_date: new Date(vol[i]["parution_date"]),
+        buy_link: vol[i]["buy_link"],
+        authors: this.compilAuthorsOf(i, vol[i])
+
+      }));
+      ;
+      
+
+    }
+    this.volumes = volumesToAdd;
+
+  }
+
   private createAuthor(item: any|undefined): FormGroup {
     if (item === undefined) {
       return this.formBuilder.group({
