@@ -81,7 +81,9 @@ export class NewComponent implements OnInit {
         editor: ["", Validators.compose([
           Validators.pattern(RegEx.ALPHA_PATERN)
         ])],
+        resume: [""],
         author: this.formBuilder.array([this.createAuthor(undefined)]),
+        conserved: [true],
         sameAuthor: [true],
         volumes: this.formBuilder.array([]),
       })
@@ -150,20 +152,18 @@ export class NewComponent implements OnInit {
     const sameAuth = this.newcollectionForm.controls["sameAuthor"].value; 
     if(this.newcollectionForm.valid) {
       this.compilVolume();
-      //On instancie les volumes avec les auteurs
-        //SI l'auteur n'a ni noms, ni prenoms ALORS 
-          //On ne l'ajoute pas
       
       this.collection = new Collection({
         title: this.newcollectionForm.controls["title"].value,
         editor: this.newcollectionForm.controls["editor"].value,
-        resume: "",
+        resume: this.newcollectionForm.controls["resume"].value,
+        state: this.newcollectionForm.controls["conserved"].value,
         volumes: this.volumes
       });
       this.collectionService.add(this.collection).subscribe(
         (res: any) => {
           this.collectionDialogService.setcollection(this.collection);
-          this.theDialog.close();
+          //this.theDialog.close();
         },
       )
     }
@@ -222,11 +222,12 @@ export class NewComponent implements OnInit {
     let i =0;
     for(i = 0; i < vol.length; i++) {
       volumesToAdd.push(new Volume({
-        num: vol[i]["volume"],
+        num: vol[i]["volume_number"],
+        is_buyed: vol[i]["is_buyed"],
         title: vol[i]["title"],
         resume: vol[i]["resume"],
-        parution_date: new Date(vol[i]["parution_date"]),
-        buy_link: vol[i]["buy_link"],
+        parution_date: new Date(vol[i]["release_date"]),
+        buy_link: vol[i]["purchase_link"],
         authors: this.compilAuthorsOf(i, vol[i])
 
       }));
@@ -261,6 +262,7 @@ export class NewComponent implements OnInit {
     if (item === undefined) {
       return this.formBuilder.group({
         volume_number: [control.length +1],
+        is_buyed: [false],
         title: ["", Validators.pattern(RegEx.ALPHA_PATERN)],
         resume: [""],
         author: this.formBuilder.array([this.createAuthor(undefined)]),

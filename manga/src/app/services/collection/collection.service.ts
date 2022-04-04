@@ -9,7 +9,7 @@ import { Collection } from './collection';
   providedIn: 'root'
 })
 export class CollectionService {
-  baseUrl = "http://localhost/collectionPI/api/collections/";
+  baseUrl = "http://localhost/mangAPI/api/books/";
   constructor(private http: HttpClient) { }
 
 
@@ -22,6 +22,8 @@ export class CollectionService {
     for(i = 0; i < vols.length; i++) { //POUR tout volume FAIRE 
       authors = [];
       for(j = 0; j < vols[i].authors.length; j++) { //POUR tout auteur du volume i FAIRE
+        //SI il n'utilise pas d'id ALORS
+        
         authors.push({
           //id: vols[i].authors[j].id,
           name: vols[i].authors[j].name,
@@ -31,12 +33,26 @@ export class CollectionService {
       }
       volumes.push({
         num: vols[i].num,
-        resume: vols[i].resume,
+        //resume: vols[i].resume,
         //parution_date: vols[i].parution_date,
         //buy_link: vols[i].buy_link,
-        //is_buyed: vols[i].is_buyed,
+        is_buyed: vols[i].is_buyed,
         authors: authors
-      })
+      });
+      if (vols[i].title !== "") {
+        volumes[i].title = vols[i].title;
+      }
+      if (vols[i].resume !== "") {
+        volumes[i].resume = vols[i].resume;
+      }
+      if (vols[i].parution_date) {
+        volumes[i].parution_date = vols[i].parution_date;
+      }
+      if (vols[i].buy_link !== "") {
+        
+        volumes[i].buy_link = vols[i].buy_link;
+      }
+      console.log(vols[i].parution_date);
     } 
       
     
@@ -46,7 +62,7 @@ export class CollectionService {
           title: collection.title,
           editor: collection.editor,
           resume: collection.resume,
-          state: collection.state,
+          is_conserved: collection.state,
           volumes: volumes
         }
       }

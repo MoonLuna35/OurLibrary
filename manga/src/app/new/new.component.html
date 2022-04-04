@@ -20,8 +20,8 @@
         
         <mat-dialog-content>
             <div class="content">
+                <mat-checkbox formControlName="conserved">Je conserve la collection</mat-checkbox>
                 <mat-checkbox formControlName="sameAuthor">Ce sont les memes auteurs pour tout les tomes</mat-checkbox>
-
                 <div *ngIf="newcollectionForm.controls['sameAuthor'].value === true">
                     <div class="pointer add_author" (click)="OnAddMainAuthorClicked()"><mat-icon >add_circle</mat-icon><span class>Ajouter un auteur</span></div>
                     <div class="author" formArrayName="author">
@@ -44,10 +44,19 @@
                         </div>
                     </div>
                 </div>
+                <div>   
+                    <mat-form-field appearance="fill" class="resume">
+                
+                        <mat-label>Resume</mat-label>
+                        <textarea type="text" matInput formControlName="resume"></textarea>
+                    </mat-form-field>
+                </div>
                 <div class="volume" *ngFor="let volume of getVolumeControls(); let i = index" formArrayName="volumes">
                     <div [formGroupName]="i">
                         <div class="volume_header">
-                            <h2>Tome {{ i + 1 }}</h2><div *ngIf="volumesLength > 1" class="pointer" (click)="OnRemoveVolumeClicked($event, i)"><mat-icon class="delete_icon" >delete_forever</mat-icon><span class="bubule">Supprimer le tome</span></div>
+                            <h2>Tome {{ i + 1 }}</h2><div *ngIf="volumesLength > 1" class="pointer" (click)="OnRemoveVolumeClicked($event, i)">
+                            <mat-icon class="delete_icon" >delete_forever</mat-icon><span class="bubule">Supprimer le tome</span></div>
+                            <mat-checkbox formControlName="is_buyed">Il est deja dans ma bibliotheque</mat-checkbox>
                         </div>
                         <div>
                             <mat-icon *ngIf="volumeList?.get(i)?.nativeElement.classList.contains('gosth')" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_down</mat-icon>
