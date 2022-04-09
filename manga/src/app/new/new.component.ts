@@ -157,7 +157,7 @@ export class NewComponent implements OnInit {
         title: this.newcollectionForm.controls["title"].value,
         editor: this.newcollectionForm.controls["editor"].value,
         resume: this.newcollectionForm.controls["resume"].value,
-        state: this.newcollectionForm.controls["conserved"].value,
+        is_conserved: this.newcollectionForm.controls["conserved"].value,
         volumes: this.volumes
       });
       this.collectionService.add(this.collection).subscribe(

@@ -62,13 +62,20 @@ export class CollectionService {
           title: collection.title,
           editor: collection.editor,
           resume: collection.resume,
-          is_conserved: collection.state,
+          is_conserved: collection.is_conserved,
           volumes: volumes
         }
       }
     }
-    console.log(payload);
       return this.http.post(`${this.baseUrl}add`, payload).pipe(
+      map((res: any) => {
+        return res['data'];
+      })
+    );
+  }
+
+  get_library() {
+    return this.http.get(`${this.baseUrl}get-library`, {}).pipe(
       map((res: any) => {
         return res['data'];
       })

@@ -1,11 +1,17 @@
-$not_cons_color: rgb(255, 113, 113);
+$not_cons_color: rgb(247, 187, 187);
 $complete_color: rgb(164, 253, 142);
-$cons_color: rgb(164, 253, 142);;
-$buy_color: rgb(116, 197, 95);
-$tome_not_buyed: rgb(241, 212, 150);
+$cons_color: rgb(226, 255, 218);;
+$buy_color: rgb(184, 207, 178);
+$tome_not_buyed: rgb(255, 236, 205);
 
 $foreground: rgb(254, 250, 255);
 $border_color:rgb(226, 226, 226); 
+
+$border_coll_color:rgb(148, 148, 148);
+$border_not_cons_color:rgb(255, 192, 192);
+$border_buyed_color:rgb(131, 202, 113);
+
+$dis_color:rgb(179, 150, 150); 
 
 
 
@@ -68,10 +74,38 @@ li {
     margin-left: 10px;
 }
 
-#not_cons {
+.not_cons {
     background-color: $not_cons_color;
 }
 
-#tome_not_buyed {
+.vol {
+    padding: 10px;
+}
+
+.vol_container .not_cons {
+    color: $dis_color;
+    border-bottom: 1px solid $border_not_cons_color;
+}
+
+.vol_container .buyed {
+    border-bottom: 1px solid $border_buyed_color;
+}
+
+.tome_not_buyed {
     background-color: $tome_not_buyed;
+}
+
+.coll_container {
+    width: 500px;
+}
+
+.coll {
+    padding: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-bottom: 1px solid $border_coll_color;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    margin-top: 10px;
+    
 }
