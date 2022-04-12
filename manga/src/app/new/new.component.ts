@@ -111,7 +111,7 @@ export class NewComponent implements OnInit {
     this.volumesLength++;
     this.cdr.detectChanges();
     
-  }
+  } 
   OnDeployBroClicked(event: Event, i:number) {
     event.preventDefault();
     let to_deploy =  this.volumeList?.get(i);

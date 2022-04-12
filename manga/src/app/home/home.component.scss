@@ -1,8 +1,8 @@
 $not_cons_color: rgb(247, 187, 187);
 $complete_color: rgb(164, 253, 142);
-$cons_color: rgb(226, 255, 218);;
-$buy_color: rgb(184, 207, 178);
-$tome_not_buyed: rgb(255, 236, 205);
+$cons_color: rgb(236, 253, 231);;
+$buy_color: rgb(195, 204, 193);
+$tome_not_buyed: rgb(255, 234, 205);
 
 $foreground: rgb(254, 250, 255);
 $border_color:rgb(226, 226, 226); 
@@ -104,8 +104,8 @@ li {
     font-weight: bold;
     letter-spacing: 1px;
     border-bottom: 1px solid $border_coll_color;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
     margin-top: 10px;
     
 }

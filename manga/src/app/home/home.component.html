@@ -2,26 +2,36 @@
     <mat-icon>dfdffdfdf</mat-icon>
     <section>
       <h1>Mes collections</h1>
-      <a routerLink="new"><mat-icon>add_circle</mat-icon><span>Ajouter un nouveau collection</span></a>
-      <div class="coll_container" *ngFor="let collection of collections">
-        <div >
-          <div class="coll" [ngClass]="{
-            'not_cons': !collection.is_conserved,
-            'cons': collection.is_conserved
-          }">
-          {{ collection.title }} <mat-icon>keyboard_arrow_down</mat-icon>
+      <a routerLink="new"><mat-icon>add_circle</mat-icon><span>Ajouter une nouveau collection</span></a>
+      <div *ngIf="collections.length > 0">
+        <div class="coll_container" *ngFor="let collection of collections;  let i = index;">
+          <div >
+            <div class="coll" [ngClass]="{
+              'buyed': collection.is_complete(),
+              'not_cons': !collection.is_complete() && !collection.is_conserved,
+              'cons': !collection.is_complete() && collection.is_conserved
+              
+            }">
+              {{ collection.title }}
+              <mat-icon *ngIf="!get_deployable(i)" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="get_deployable(i)" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_up</mat-icon>
+            </div>
           </div>
-        </div>
-        <div class="vol_container gosth" *ngFor="let volume of collection.volumes">
-          <div class="vol" [ngClass]="{
-            'not_cons': !collection.is_conserved,
-            'buyed': collection.is_conserved && volume.is_buyed,
-            'tome_not_buyed': collection.is_conserved && !volume.is_buyed
-          }">
-            Volume {{ volume.num }} {{volume. title}}
+          <div #deployable class="gosth">
+            <div class="vol_container" *ngFor="let volume of collection.volumes" >
+              <div class="vol" [ngClass]="{
+                'not_cons': !collection.is_conserved,
+                'buyed': collection.is_conserved && volume.is_buyed,
+                'tome_not_buyed': collection.is_conserved && !volume.is_buyed
+              }">
+                Volume {{ volume.num }} {{volume. title}}
+              </div>
+            </div>
           </div>
+          
         </div>
       </div>
+      
     </section>
     <aside>
     <h2>Legende</h2>
