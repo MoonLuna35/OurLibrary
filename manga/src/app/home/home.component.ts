@@ -4,6 +4,7 @@ import { collectionDialogService, NewComponent } from '../new/new.component';
 import { Collection, CollectionView, fdp } from '../services/collection/collection';
 import { CollectionService } from '../services/collection/collection.service';
 import { Volume } from '../services/volume/volume';
+import { VolumeService } from '../services/volume/volume.service';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +16,12 @@ export class HomeComponent implements OnInit {
   ];
   @ViewChildren("deployable") deployableList!: QueryList<ElementRef>;
   @ViewChildren("deployer") deployerList!: QueryList<ElementRef>;
+  is_working: boolean = true
 
   constructor(
     public collectionDialogService: collectionDialogService,
-    private collectionService: CollectionService  
+    private collectionService: CollectionService,
+    private volumeService: VolumeService 
   ) {
     
   }
@@ -38,6 +41,53 @@ export class HomeComponent implements OnInit {
         }
       }
     );
+
+    this.is_working = false;
+  }
+
+  OnBuyerClicked(event: Event, i: number, j: number) {
+    event.preventDefault();
+    let vol: Volume = this.collections[i].volumes[j];
+    if(
+      !this.collections[i].volumes[j].is_buyed
+      &&
+      !this.is_working
+    ) {
+      this.is_working = true;
+      vol.is_buyed = true;
+      this.volumeService.update_is_buyed(vol).subscribe(
+        (res: any) => {
+          if(res.status !== undefined && res.status === "ok") {
+            this.collections[i].set_volume_buyed(j, true);
+          }
+          this.is_working = false;
+        }
+        
+      );
+    }
+  }
+
+  OnUnbuyerClicked(event: Event, i: number, j: number) {
+    event.preventDefault();
+    let vol: Volume = this.collections[i].volumes[j];
+    if(
+      this.collections[i].volumes[j].is_buyed
+      &&
+      !this.is_working
+    ) {
+      this.is_working = true;
+      vol.is_buyed = false;
+      this.volumeService.update_is_buyed(vol).subscribe(
+        (res: any) => {
+          if(res.status !== undefined && res.status === "ok") {
+            this.collections[i].set_volume_buyed(j, false);
+          }
+          this.is_working = false;
+        }
+        
+      );
+    }
+    
   }
 
   OnDeployBroClicked(event: Event, i:number) {

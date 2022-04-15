@@ -1,6 +1,6 @@
 $not_cons_color: rgb(247, 187, 187);
-$complete_color: rgb(164, 253, 142);
-$cons_color: rgb(236, 253, 231);;
+$complete_color: rgb(140, 172, 133);
+$cons_color: rgb(176, 214, 166);;
 $buy_color: rgb(195, 204, 193);
 $tome_not_buyed: rgb(255, 234, 205);
 
@@ -11,7 +11,7 @@ $border_coll_color:rgb(148, 148, 148);
 $border_not_cons_color:rgb(255, 192, 192);
 $border_buyed_color:rgb(131, 202, 113);
 
-$dis_color:rgb(179, 150, 150); 
+$dis_color:rgb(136, 136, 136); 
 
 
 
@@ -61,12 +61,29 @@ li {
     background-color: $cons_color;
 }
 
+.complete {
+    background-color: $complete_color;
+}
+
+.disabled {
+    color: $dis_color
+}
+
 .legend_color {
     display: inline-block;
     border: 1px solid black;
     height: 20px;
     width: 50px;
     border-radius: 3px;
+}
+
+.volume_head, .volume_actions{
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.volume_head {
+    width: calc(100% - 100px);
 }
 
 .legend_text {

@@ -84,6 +84,9 @@ export class Collection {
     public set volumes(value: Array<Volume>) {
         this._volumes = value;
     }
+    set_volume_buyed(i: number,value: boolean) {
+        this._volumes[i].is_buyed = value;
+    }
 }
 
 export class CollectionView extends Collection {
@@ -96,7 +99,6 @@ export class CollectionView extends Collection {
         let collections = []
         for(let i = 0;  i < res.collections.length; i++) {
             let v = [];
-            console.log(res.collections[i].volumes);
             for(let j = 0; j < res.collections[i].volumes.length; j++) {
                 let a = [];
                 for(let k = 0; k < res.collections[i].volumes[j].authors.length; k++) {
