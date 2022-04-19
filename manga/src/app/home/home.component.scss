@@ -9,7 +9,7 @@ $border_color:rgb(226, 226, 226);
 
 $border_coll_color:rgb(148, 148, 148);
 $border_not_cons_color:rgb(255, 192, 192);
-$border_buyed_color:rgb(131, 202, 113);
+$border_buyed_color:rgb(140, 172, 133);
 
 $dis_color:rgb(136, 136, 136); 
 
@@ -57,11 +57,11 @@ li {
     background-color: $buy_color;
 }
 
-.cons {
+.cons, .cons .menu_deployable {
     background-color: $cons_color;
 }
 
-.complete {
+.complete, .complete .menu_deployable {
     background-color: $complete_color;
 }
 
@@ -69,6 +69,21 @@ li {
     color: $dis_color
 }
 
+
+
+.menu_deployable {
+    margin-top: 30px;
+    padding-right: 10px;
+    margin-left: -75px;
+}
+
+.menu_deployer  .menu_deployable {
+    display: none;
+}
+.menu_deployer:hover  .menu_deployable {
+    display: inline-flex;
+    position: absolute;
+}
 .legend_color {
     display: inline-block;
     border: 1px solid black;
@@ -77,13 +92,17 @@ li {
     border-radius: 3px;
 }
 
-.volume_head, .volume_actions{
+.volume_head, .volume_actions, .coll_head, .coll_actions{
     display: inline-flex;
     flex-wrap: wrap;
 }
 
+.coll_head {
+    width: calc(100% - 160px);
+}
+
 .volume_head {
-    width: calc(100% - 100px);
+    width: calc(100% - 130px);
 }
 
 .legend_text {
@@ -91,7 +110,7 @@ li {
     margin-left: 10px;
 }
 
-.not_cons {
+.not_cons,  .not_cons .menu_deployable {
     background-color: $not_cons_color;
 }
 
@@ -113,7 +132,7 @@ li {
 }
 
 .coll_container {
-    width: 500px;
+    width: 100%;
 }
 
 .coll {
@@ -121,8 +140,6 @@ li {
     font-weight: bold;
     letter-spacing: 1px;
     border-bottom: 1px solid $border_coll_color;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    margin-top: 10px;
+
     
 }

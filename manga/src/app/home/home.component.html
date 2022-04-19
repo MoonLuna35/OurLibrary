@@ -12,11 +12,23 @@
               'cons': !collection.is_complete() && collection.is_conserved
               
             }">
+            <mat-icon *ngIf="!get_deployable(i)" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="get_deployable(i)" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_up</mat-icon>
+            <div class="coll_head">
               {{ collection.title }}
-              <mat-icon *ngIf="!get_deployable(i)" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_down</mat-icon>
-              <mat-icon *ngIf="get_deployable(i)" (click)="OnDeployBroClicked($event, i)" #deployer>keyboard_arrow_up</mat-icon>
+            </div> 
+            <div class="coll_actions">
+              
+              <mat-icon [ngClass]="{'disabled': collection.is_conserved || is_working, 'pointer': !collection.is_conserved && !is_working}">check_circle_outline</mat-icon>
+              <mat-icon [ngClass]="{'disabled': !collection.is_conserved || is_working, 'pointer': collection.is_conserved && !is_working}">highlight_off</mat-icon>
+              <mat-icon>edit</mat-icon>
+              <mat-icon *ngIf="collection.is_conserved">drag_indicator</mat-icon>
             </div>
+            
+            </div>
+           
           </div>
+          
           <div #deployable class="gosth">
             <div class="vol_container" *ngFor="let volume of collection.volumes; let j = index" >
               <div class="vol" [ngClass]="{
@@ -27,12 +39,14 @@
                 <div class="volume_head">
                   Volume {{ volume.num }} {{volume. title}}
                 </div>
-                <div class=volume_actions>
+                <div *ngIf="collection.is_conserved" class=volume_actions>
                   <mat-icon [ngClass]="{'disabled': volume.is_buyed || is_working, 'pointer': !volume.is_buyed && !is_working}" (click)="OnBuyerClicked($event, i, j)">check_circle_outline</mat-icon>
                   <mat-icon [ngClass]="{'disabled': !volume.is_buyed || is_working, 'pointer': volume.is_buyed && !is_working}" (click)="OnUnbuyerClicked($event, i, j)">highlight_off</mat-icon>
-                  <mat-icon>edit</mat-icon>
+                  <mat-icon class="pointer">edit</mat-icon>
+                  <mat-icon *ngIf="collection.is_conserved">drag_indicator</mat-icon>
                 </div>
               </div>
+              
             </div>
           </div>
           

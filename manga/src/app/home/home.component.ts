@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   ];
   @ViewChildren("deployable") deployableList!: QueryList<ElementRef>;
   @ViewChildren("deployer") deployerList!: QueryList<ElementRef>;
+  @ViewChildren("menu") menuList!: QueryList<ElementRef>;
   is_working: boolean = true
 
   constructor(
@@ -89,7 +90,7 @@ export class HomeComponent implements OnInit {
     }
     
   }
-
+  
   OnDeployBroClicked(event: Event, i:number) {
     event.preventDefault();
     
@@ -102,6 +103,28 @@ export class HomeComponent implements OnInit {
       to_deploy?.nativeElement.classList.add('gosth')
     }
     this.collections[i].is_deployed = !this.collections[i].is_deployed
+  }
+  OnDeployMenuClicked(event: Event, i: number): void {
+    event.preventDefault();
+
+    let menu = this.menuList?.get(i);
+    const is_closed = menu?.nativeElement.classList.contains("gosth")
+    for(let j =0; j < this.menuList.length; j++) {
+      let menu_to_close = this.menuList?.get(j);
+      if(!menu_to_close?.nativeElement.classList.contains("gosth")) {
+        menu_to_close?.nativeElement.classList.add("gosth");
+      } 
+    }
+    if(is_closed) {
+      menu?.nativeElement.classList.remove("gosth");
+    }
+   
+  }
+  OnMenuMouseOut(event: Event, i: number): void  {
+    event.preventDefault();
+    console.log("here");
+    let menu = this.menuList?.get(i);
+    menu?.nativeElement.classList.add("gosth");
   }
 
   get_deployable(i: number) {
